@@ -1,10 +1,21 @@
 import React, { Component } from "react";
 import QuizQuestionButton from "./QuizQuestionButton.js";
+import { stat } from "fs";
 
 class QuizQuestion extends Component {
+  constructor(props){
+    super(props);
+    this.state = { incorrectAnswer : false };
+  }
+
   handleClick(button_text) {
     if (button_text === this.props.quiz_question.answer) {
       this.props.showNextQuestionHandler();
+      this.setState( {incorrectAnswer : false});
+    }
+    else
+    {
+      this.setState( {incorrectAnswer : true} );
     }
   }
 
@@ -29,6 +40,7 @@ class QuizQuestion extends Component {
             )}
           </ul>
         </section>
+        {this.state.incorrectAnswer ? <p className="error">Sorry, incorrect</p> : null}
       </main>
     );
   }
